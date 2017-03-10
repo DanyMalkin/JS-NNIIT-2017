@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+                <head>
+                               <meta charset="utf-8">
+                               <title>TODO</title>
+                                                             
+<style>
+.wrapper
+{
+width:960px;
+margin-left: auto;
+margin-right: auto;
+overflow:hidden;
+}
+
+.textChecked{
+text-decoration:line-through;
+color: grey;	
+}
+
+.none{
+display: none;	
+}
+
+.none1{
+display: none;	
+}
+.task{
+position: relative;
+margin-top: 5px;
+margin-left: 30%;
+padding-left: 30px;
+padding-top: 5px;
+padding-bottom: 5px;
+float: left;
+font-size: 15pt;
+width: 440px;
+
+border: solid 1px;
+}
+.TodoInput{
+position: relative;
+background-color: lightblue;
+margin-top: 5px;
+margin-left: 30%;
+margin-ight: 10px;
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 5px;
+float: left;
+font-size: 15pt;
+width: 430px;
+height: 80px;
+border: solid 1px;
+}
+.close_block {
+font-size: 20pt;
+display: block;
+position: absolute;
+top: 2px;
+right: 20px;
+cursor: pointer;
+}
+
+.check {
+font-size: 20pt;
+display: block;
+position: absolute;
+top: 5px;
+left: 10px;
+width: 16px;
+height: 16px;
+cursor: pointer;
+}
+</style>
+
+</head> 
+<body>
+
+<div class="wrapper">
+<div class="TodoInput">add todo <input id="add_todo" type="text" size="42">
+<hr>
+<span id="Count"></span>
+<button id="All" onclick="ActivePressedAll()">All</button>
+<button id="Active" onclick="ActivePressedActive()">Active</button>
+<button id="Completed" onclick="ActivePressedCompleted()">Completed</button>
+<button id="ClearCompleted" onclick="ActivePressedClearCompleted();Count()">ClearCompleted</button>
+</div>
+    
+<div id="todos">
+      
+</div>
+
+<script>
+    var input = document.querySelector('#add_todo');
+    var todos = document.querySelector('#todos');
+    var i=0;
+    
+    function hendleKeypressed(event) {
+        
+        if((event.key==="Enter")&&(input.value!="")){
+            
+			var newTodo = document.createElement('div');
+			newTodo.className = 'task';	
+			newTodo.id = 'task';	
+			
+			var newCheckbox = document.createElement('input');
+            newCheckbox.type = 'checkbox';
+			newTodo.appendChild(newCheckbox);
+				
+					
+			
+            var text = document.createElement('span');
+			text.textContent = input.value;
+			todos.appendChild(newTodo);
+			newTodo.appendChild(text);
+			i++;
+			text.id = 'id'+i;
+			
+			newCheckbox.addEventListener('click', function(){
+			text.classList.toggle('textChecked')});
+			
+			var newCloseBox = document.createElement('div');
+            newCloseBox.innerHTML = '&#215;';
+            newCloseBox.className = 'close_block';
+            newTodo.appendChild(newCloseBox);
+            
+			newCloseBox.addEventListener('click', function(){
+					newTodo.classList.toggle('none1');
+			   	    var c=0;
+	                for(var n=1;n<=i;n++){
+			        var elem = document.querySelector('#id'+n);
+			        if (elem.parentNode.classList.contains('none1')) {}
+            		 else {c++;}
+		            }
+					document.querySelector('#Count').innerHTML = c+"&nbsp; items left &nbsp;";
+	        })
+			
+			
+            input.value = "";
+            
+            var c=0;
+	        for(var n=1;n<=i;n++){
+			    var elem = document.querySelector('#id'+n);
+			     	if (elem.parentNode.classList.contains('none1')) {}
+			     else {c++;}
+			}
+			document.querySelector('#Count').innerHTML = c+"&nbsp; items left &nbsp;";
+		}
+    }
+	
+	function ActivePressedAll() {
+	for(var n=1;n<=i;n++){
+			var elem = document.querySelector('#id'+n);
+			elem.parentNode.classList.remove('none');
+			}
+	}
+	
+	function ActivePressedActive() {
+		for(var n=1;n<=i;n++){
+		var elem = document.querySelector('#id'+n);
+			if (elem.classList.contains('textChecked')) {
+			elem.parentNode.classList.add('none');
+			} 
+			else elem.parentNode.classList.remove('none');
+		}
+	}
+	
+	function ActivePressedCompleted() {
+	for(var n=1;n<=i;n++){
+			var elem = document.querySelector('#id'+n);
+			if (elem.classList.contains('textChecked')) {
+			elem.parentNode.classList.remove('none');
+			} 
+			else elem.parentNode.classList.add('none');
+		}
+	}
+	
+	function ActivePressedClearCompleted() {
+	for(var n=1;n<=i;n++){
+			var elem = document.querySelector('#id'+n);
+			if (elem.classList.contains('textChecked')) {
+			elem.parentNode.classList.add('none1');
+			}
+		}
+	}
+	
+	function Count() {
+	    var c=0;
+		for(var n=1;n<=i;n++){
+			var elem = document.querySelector('#id'+n);
+			if (elem.parentNode.classList.contains('none1')) {}
+			else {c++;}
+			}
+		document.querySelector('#Count').innerHTML = c+"&nbsp; items left &nbsp;";;
+	}
+	
+	document.addEventListener('keypress', Count());
+    document.addEventListener('keypress', hendleKeypressed);
+    
+</script>
+
+</div>
+
+</body>
+</html>

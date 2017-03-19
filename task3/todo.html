@@ -150,19 +150,12 @@ cursor: pointer;
             
 			newCloseBox.addEventListener('click', function(){
 					newTodo.classList.toggle('none1');
-					//newTodo.remove();
 					fetch('http://localhost:3001/todos-delete', {
-					method: 'POST',
-					mode: 'cors',
-					headers: new Headers({ "Content-Type": "application/json"}),
-					body: JSON.stringify({'ids': [TodoId]})		
-					})
-					
-					//.then(res => res.json())
-					//.then(json => 
-					//{alert(json[TodoId].text);
-					//json[ThisId].remove();
-					//})
+						method: 'POST',
+						mode: 'cors',
+						headers: new Headers({ "Content-Type": "application/json"}),
+						body: JSON.stringify({'ids': [TodoId]})		
+						})
 					
 			   	    var c=0;
 	                for(var n=1;n<=i;n++){
@@ -206,26 +199,9 @@ cursor: pointer;
 			.then(json => 
 			{NewId = json.id;
 			CreateToDo(NewId, NewText, false);})
-			
-			//CreateToDo(NewId, NewText, false);
-		
-		
-		
-		}
+			}
  }
-//})
-  //.then(resp => {
-    //console.log(resp.status);
-   // return resp.text(); 
- // })
-  //.then(text => console.log(text))
- // .catch(err => console.log(err));
-		
-		
-		
-		
-			
-	
+
 	function ActivePressedAll() {
 	for(var n=1;n<=i;n++){
 			var elem = document.querySelector('#id'+n);
@@ -283,13 +259,10 @@ cursor: pointer;
 		document.querySelector('#Count').innerHTML = c+"&nbsp; items left &nbsp;";;
 	}
 	
-//document.addEventListener('keypress', Count());
 document.addEventListener('keypress', hendleKeypressed);
 
 fetch('http://localhost:3001/todos')
 	.then(res => res.json())
-	//.then(function(res) {return res.json()})
-	
 	.then(json => 
 	
 	{	for(let i = 0; i < json.length; i++){
@@ -298,21 +271,7 @@ fetch('http://localhost:3001/todos')
 		CreateToDo(id, todo,json[i].done);
 		}
 	})
-	
-  
-  
-  
-//fetch('/http://localhost:3001/todos', {
- // method: 'POST',
- // headers: new Headers({ "Content-Type": "application/json"}) 
-//})
-  //.then(resp => {
-    //console.log(resp.status);
-   // return resp.text(); 
- // })
-  //.then(text => console.log(text))
- // .catch(err => console.log(err));	
-  
+
 </script>
 
 </div>
